@@ -3,6 +3,10 @@ from sklearn import svm
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 data = load_breast_cancer(as_frame=True)
 
@@ -22,3 +26,11 @@ cf = confusion_matrix(y_test, y_pred)
 print(cf)
 
 print(clf.score(X_train_std, y_train))
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+sns.heatmap(cf, annot=True, fmt='d', cmap='Blues')
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix")
+plt.show()

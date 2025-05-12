@@ -1,7 +1,6 @@
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn import datasets
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -9,7 +8,6 @@ import seaborn as sns
 data = datasets.load_iris()
 df = pd.DataFrame(data['data'], columns=data['feature_names'])
 df['target'] = data['target']
-print(df.head())
 
 plt.figure(figsize=(8, 8))
 ax = sns.pairplot(df, hue='target')
@@ -22,12 +20,9 @@ print(X_df.var(axis=0))
 scalerX = StandardScaler()
 scalerX.fit(data.data)
 X_std = scalerX.transform(data.data)
-print(X_std)
 
 pca=PCA()
 pca.fit(X_std)
-print(pca.explained_variance_)
-print(pca.explained_variance_ratio_)
 
 plt.plot(pca.explained_variance_, 'o-')
 plt.title('Scree Plot')

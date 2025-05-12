@@ -3,12 +3,15 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.decomposition import PCA
+import seaborn as sns
+import pandas as pd
 import matplotlib.pyplot as plt
 
 iris = load_iris()
 X = iris.data
 y = iris.target
 
+# 데이터 분할(훈련 80%, 테스트 20%)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # KNN 학습
@@ -81,3 +84,13 @@ plt.show()
 # 결과 비교
 print(f"Original Data Accuracy: {acc_original:.2f}")
 print(f"PCA Data Accuracy: {acc_pca:.2f}")
+
+
+# 원본 데이터 pairplot
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['target'] = iris.target
+
+iris_df['species'] = iris_df['target'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+
+sns.pairplot(iris_df.drop(columns=['target']), hue='species', palette='Set2')
+plt.show()
