@@ -123,6 +123,16 @@ cm = confusion_matrix(y_test, best_y_pred_pca)
 print("\nConfusion Matrix (Best C):")
 print(cm)
 
+# confusion matrix 시각화
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.xlabel("Predicted Class")
+plt.ylabel("Actual Class")
+plt.title(f"Confusion Matrix (C={best_c_pca})")
+plt.xticks(ticks=[0.5, 1.5], labels=["Malignant", "Benign"])
+plt.yticks(ticks=[0.5, 1.5], labels=["Malignant", "Benign"])
+plt.show()
+
 # classification report 출력
 print("\nClassification Report:")
 print(classification_report(y_test, best_y_pred_pca, target_names=data.target_names))
