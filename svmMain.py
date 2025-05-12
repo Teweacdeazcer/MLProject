@@ -65,6 +65,18 @@ plt.yticks(ticks=[0.5, 1.5], labels=["Malignant", "Benign"])
 plt.tight_layout()
 plt.show()
 
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['target'] = data.target
+
+# 대표 feature 4개 선택
+selected_features = ['mean radius', 'mean texture', 'mean smoothness', 'mean concavity', 'target']
+df_pair = df[selected_features]
+
+# pairplot
+sns.pairplot(df_pair, hue='target', palette='Set1')
+plt.suptitle("Pairplot of Original Features (Target = Malignant[0], Benign[1])", y=1.02)
+plt.show()
+
 '''# PCA'''
 print("\n# PCA")
 X = data.data
@@ -88,8 +100,8 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # PCA
-# pca = PCA(n_components=2)
-pca = PCA(n_components=3)
+# pca = PCA(n_components=2) # 현재 주성분 2개
+pca = PCA(n_components=3) # 현재 주성분 3개
 X_train_pca = pca.fit_transform(X_train_scaled)
 X_test_pca = pca.transform(X_test_scaled)
 
@@ -140,7 +152,7 @@ print(classification_report(y_test, best_y_pred_pca, target_names=data.target_na
 # PCA pairplot
 X_total_pca = pca.transform(scaler.transform(X))  
 # df_pca = pd.DataFrame(X_total_pca, columns=['PCA1', 'PCA2']) # 주성분 2개일 때
-df_pca = pd.DataFrame(X_total_pca, columns=['PCA1', 'PCA2', 'PCA3'])
+df_pca = pd.DataFrame(X_total_pca, columns=['PCA1', 'PCA2', 'PCA3']) # 주성분 3개일 때
 df_pca['target'] = y
 
 # PCA pairplot 시각화
